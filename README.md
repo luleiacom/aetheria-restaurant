@@ -1,16 +1,30 @@
-# React + Vite
+# Aetheria | Molecular Gastronomy & AI Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> A high-end, multi-sensory fine-dining web platform blending culinary alchemy with precision algorithms and automated WhatsApp bookings.
 
-Currently, two official plugins are available:
+![Aetheria Preview](https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Modern Glassmorphism UI:** Built with **Tailwind CSS**, custom color palettes, and Google Fonts (`Playfair Display` & `Inter`).
+- **Interactive Signature Menu:** Dynamic category filters (Molecular, Signature, Desserts, Cocktails) with detailed descriptions and pricing.
+- **AI Sommelier Widget:** A floating interactive chat assistant providing live dish pairings and virtual guidance.
+- **WhatsApp Automation:** Instant booking system that formats user reservation details (Name, Email, Date, Time, Guests) and redirects them directly to WhatsApp.
+- **Fully Responsive:** Optimized for seamless performance across mobile devices, tablets, and desktops.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Built With
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* **HTML5 & Modern JavaScript (ES6+)**
+* **Tailwind CSS** (via Play CDN)
+* **FontAwesome** (Icons)
+* **Unsplash** (High-resolution imagery)
+
+---
+
+## Quick Start / Local Installation
+
+1. Clone the repository:
+   ```bash
+   git clone [https://github.com/luleiacom/aetheria-restaurant.git](https://github.com/luleiacom/aetheria-restaurant.git)
