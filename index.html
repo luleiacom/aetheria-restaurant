@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aetheria | Molecular Gastronomy & AI</title>
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#09090b',
+                        cardBg: '#121216',
+                        accentGold: '#d4af37',
+                        accentGoldHover: '#c19b2e'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .glass {
+            background: rgba(18, 18, 22, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-zinc-100 font-sans antialiased selection:bg-accentGold selection:text-black">
+
+    <!-- Header / Navbar -->
+    <header class="fixed top-0 left-0 w-full z-50 glass border-b border-zinc-800/80">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="font-serif text-2xl tracking-wider text-zinc-100 flex items-center gap-2">
+                <span class="text-accentGold">AETHERIA</span>
+            </a>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-light tracking-wide">
+                <a href="#menu" class="hover:text-accentGold transition-colors">Menu</a>
+                <a href="#experience" class="hover:text-accentGold transition-colors">AI Experience</a>
+                <a href="#reservations" class="hover:text-accentGold transition-colors">Reservations</a>
+            </nav>
+            <button onclick="toggleChat()" class="bg-accentGold text-black px-4 py-2 rounded-full text-xs font-semibold tracking-wider hover:bg-accentGoldHover transition-all flex items-center gap-2 shadow-lg shadow-accentGold/10">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> AI Sommelier
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1920&auto=format&fit=crop" alt="Hero Background" class="w-full h-full object-cover filter brightness-[0.3] scale-105 animate-pulse duration-[10000ms]">
+            <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/60 to-transparent"></div>
+        </div>
+        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+            <span class="text-accentGold uppercase tracking-[0.3em] text-xs font-semibold mb-4 block">Fine Dining & Artificial Intelligence</span>
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl tracking-tight mb-6 text-zinc-100 leading-tight">
+                The future of taste <span class="italic font-normal text-accentGold">coded</span>.
+            </h1>
+            <p class="text-zinc-400 text-sm md:text-base max-w-xl mx-auto font-light mb-10 leading-relaxed">
+                A multi-sensory gastronomic experience where culinary alchemy blends seamlessly with precision algorithms to create unforgettable moments.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#menu" class="w-full sm:w-auto bg-accentGold text-black px-8 py-3.5 rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-accentGoldHover transition-all">
+                    Explore Menu
+                </a>
+                <a href="#reservations" class="w-full sm:w-auto glass border border-zinc-700 px-8 py-3.5 rounded-full text-xs font-semibold uppercase tracking-wider hover:border-accentGold transition-all">
+                    Book a Table
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Menu -->
+    <section id="menu" class="py-24 max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <span class="text-accentGold uppercase tracking-[0.2em] text-xs font-semibold mb-2 block">Culinary Vision</span>
+            <h2 class="font-serif text-3xl md:text-5xl">Signature Menu</h2>
+            <div class="flex flex-wrap justify-center gap-2 mt-8">
+                <button onclick="renderMenu('all')" class="filter-btn bg-accentGold text-black px-5 py-2 rounded-full text-xs font-semibold tracking-wide transition-all">All</button>
+                <button onclick="renderMenu('molecular')" class="filter-btn bg-zinc-900 text-zinc-300 hover:bg-zinc-800 px-5 py-2 rounded-full text-xs font-semibold tracking-wide transition-all">Molecular</button>
+                <button onclick="renderMenu('signature')" class="filter-btn bg-zinc-900 text-zinc-300 hover:bg-zinc-800 px-5 py-2 rounded-full text-xs font-semibold tracking-wide transition-all">Signature</button>
+                <button onclick="renderMenu('dessert')" class="filter-btn bg-zinc-900 text-zinc-300 hover:bg-zinc-800 px-5 py-2 rounded-full text-xs font-semibold tracking-wide transition-all">Dessert</button>
+                <button onclick="renderMenu('cocktail')" class="filter-btn bg-zinc-900 text-zinc-300 hover:bg-zinc-800 px-5 py-2 rounded-full text-xs font-semibold tracking-wide transition-all">Cocktails</button>
+            </div>
+        </div>
+
+        <!-- Dynamic Menu Grid -->
+        <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Loaded dynamically via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Reservations Section -->
+    <section id="reservations" class="py-24 max-w-3xl mx-auto px-6">
+        <div class="glass rounded-3xl p-8 md:p-12 border border-zinc-800/80 shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-accentGold/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="text-center mb-10">
+                <span class="text-accentGold uppercase tracking-[0.2em] text-xs font-semibold mb-2 block">Exclusive Experience</span>
+                <h2 class="font-serif text-3xl">Table Reservation</h2>
+            </div>
+            
+            <form id="reservation-form" onsubmit="handleReservation(event)" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2 font-medium">Full Name</label>
+                        <input type="text" id="res-name" required class="w-full bg-zinc-900/90 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-zinc-100 focus:outline-none focus:border-accentGold transition-colors" placeholder="Your name">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2 font-medium">Email Address</label>
+                        <input type="email" id="res-email" required class="w-full bg-zinc-900/90 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-zinc-100 focus:outline-none focus:border-accentGold transition-colors" placeholder="email@example.com">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2 font-medium">Date</label>
+                        <input type="date" id="res-date" required class="w-full bg-zinc-900/90 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-zinc-100 focus:outline-none focus:border-accentGold transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2 font-medium">Time Slot</label>
+                        <select id="res-time" class="w-full bg-zinc-900/90 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-zinc-100 focus:outline-none focus:border-accentGold transition-colors">
+                            <option value="20:00">08:00 PM</option>
+                            <option value="22:00">10:00 PM</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2 font-medium">Guests</label>
+                        <select id="res-guests" class="w-full bg-zinc-900/90 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-zinc-100 focus:outline-none focus:border-accentGold transition-colors">
+                            <option value="2">2 Guests</option>
+                            <option value="4">4 Guests</option>
+                            <option value="6">6 Guests</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-accentGold text-black font-semibold py-4 rounded-xl text-xs uppercase tracking-widest hover:bg-accentGoldHover transition-all shadow-lg shadow-accentGold/10 flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-base"></i> Confirm via WhatsApp
+                </button>
+            </form>
+
+            <div id="reservation-success" class="hidden text-center py-8 space-y-4">
+                <div class="w-16 h-16 bg-accentGold/20 text-accentGold rounded-full flex items-center justify-center mx-auto text-2xl">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h3 class="font-serif text-2xl text-zinc-100">Redirecting to WhatsApp...</h3>
+                <p class="text-zinc-400 text-sm max-w-md mx-auto">We are transferring your reservation details directly to our reservations team.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-zinc-900 py-12 text-center text-xs text-zinc-500">
+        <p>&copy; 2026 Aetheria Restaurant. All rights reserved.</p>
+    </footer>
+
+    <!-- Floating AI Sommelier Widget -->
+    <div id="chat-widget" class="fixed bottom-6 right-6 z-50 hidden transition-all duration-300 transform translate-y-4 opacity-0 w-[90vw] sm:w-[380px] glass border border-zinc-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[500px]">
+        <!-- Chat Header -->
+        <div class="bg-zinc-900/90 px-5 py-4 border-b border-zinc-800 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-accentGold/20 text-accentGold flex items-center justify-center font-bold text-xs">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-semibold tracking-wider text-zinc-100 uppercase">AI Sommelier</h4>
+                    <span class="text-[10px] text-accentGold flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Online</span>
+                </div>
+            </div>
+            <button onclick="toggleChat()" class="text-zinc-400 hover:text-zinc-100 transition-colors w-7 h-7 flex items-center justify-center rounded-full hover:bg-zinc-800">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Chat Messages Area -->
+        <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-4 text-xs font-light">
+            <div class="flex items-start gap-2.5">
+                <div class="w-7 h-7 rounded-full bg-accentGold/20 flex items-center justify-center text-accentGold shrink-0 font-bold text-[10px]">AI</div>
+                <div class="bg-zinc-900 border border-zinc-800 p-3 rounded-2xl rounded-tl-none text-zinc-300 max-w-[80%] leading-relaxed">
+                    Hello. I am your virtual guide and Sommelier at Aetheria. How may I assist you with our menu or wine pairings today?
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Input Area -->
+        <div class="p-3 bg-zinc-900/90 border-t border-zinc-800 flex items-center gap-2">
+            <input type="text" id="chat-input" onkeypress="handleChatKey(event)" placeholder="Ask about a dish or pairing..." class="flex-1 bg-darkBg border border-zinc-800 rounded-xl px-4 py-2.5 text-xs text-zinc-100 focus:outline-none focus:border-accentGold transition-colors">
+            <button onclick="sendChatMessage()" class="w-9 h-9 bg-accentGold text-black rounded-xl flex items-center justify-center hover:bg-accentGoldHover transition-colors shrink-0">
+                <i class="fa-solid fa-paper-plane text-xs"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript & WhatsApp Automation Logic -->
+    <script>
+        // CONFIGURACIÓN DE WHATSAPP: Reemplaza este número por tu número de WhatsApp con código de país (ej: 549376XXXXXXXX para Argentina o código internacional sin '+')
+        const whatsappNumber = "5493764000000"; 
+
+        const menuItems = [
+            {
+                id: 1,
+                name: "Périgord Quantum Truffle Sphere",
+                category: "molecular",
+                price: "$34",
+                desc: "Black truffle spherification paired with 36-month aged parmesan air and roasted leek ash.",
+                image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600&auto=format&fit=crop"
+            },
+            {
+                id: 2,
+                name: "Wild Scallop Carpaccio",
+                category: "signature",
+                price: "$28",
+                desc: "Ultra-thin wild scallop slices with yuzu emulsion, oscietra caviar, and basil oil pearls.",
+                image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=600&auto=format&fit=crop"
+            },
+            {
+                id: 3,
+                name: "Wagyu A5 Nebula",
+                category: "signature",
+                price: "$65",
+                desc: "A5 Wagyu slow-cooked for 24 hours, served alongside mushroom soil and volcanic wine reduction.",
+                image: "https://images.unsplash.com/photo-1558030006-450675393462?q=80&w=600&auto=format&fit=crop"
+            },
+            {
+                id: 4,
+                name: "The Suspended Forest (Dessert)",
+                category: "dessert",
+                price: "$22",
+                desc: "Pistachio moss, crunchy cocoa soil, white chocolate mushrooms, and liquid nitrogen mist.",
+                image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=600&auto=format&fit=crop"
+            },
+            {
+                id: 5,
+                name: "Fuchsia Alchemy Cocktail",
+                category: "cocktail",
+                price: "$20",
+                desc: "Clitoria flower-infused gin, photosensitive artisanal tonic, and aromatic lavender smoke bubbles.",
+                image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=600&auto=format&fit=crop"
+            },
+            {
+                id: 6,
+                name: "Transparent Lobster Ravioli",
+                category: "molecular",
+                price: "$38",
+                desc: "Translucent rice starch pasta stuffed with Atlantic lobster served in a clarified crustacean consommé.",
+                image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?q=80&w=600&auto=format&fit=crop"
+            }
+        ];
+
+        function renderMenu(category = 'all') {
+            const grid = document.getElementById('menu-grid');
+            if(!grid) return;
+            grid.innerHTML = '';
+
+            const filtered = category === 'all' 
+                ? menuItems 
+                : menuItems.filter(item => item.category === category);
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'glass rounded-2xl overflow-hidden border border-zinc-800/80 group hover:border-accentGold/50 transition-all duration-500 flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 filter brightness-90 group-hover:brightness-100" onerror="this.src='https://placehold.co/600x400/121216/d4af37?text=Aetheria'">
+                            <span class="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-accentGold border border-accentGold/30 px-3 py-1 rounded-full text-xs font-semibold">
+                                ${item.price}
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl mb-2 text-zinc-100 group-hover:text-accentGold transition-colors">${item.name}</h3>
+                            <p class="text-xs text-zinc-400 font-light leading-relaxed">${item.desc}</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0">
+                        <button onclick="toggleChatWithPrompt('I would like a pairing recommendation for ${item.name}')" class="w-full bg-zinc-900 border border-zinc-800 text-zinc-300 py-2.5 rounded-xl text-xs uppercase tracking-wider hover:bg-accentGold hover:text-black hover:border-accentGold transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-wine-glass text-[10px]"></i> Ask AI Pairing
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-accentGold', 'text-black', 'font-semibold');
+                btn.classList.add('bg-zinc-900', 'text-zinc-300');
+            });
+            if(event && event.target) {
+                event.target.classList.add('bg-accentGold', 'text-black', 'font-semibold');
+                event.target.classList.remove('bg-zinc-900', 'text-zinc-300');
+            }
+        }
+
+        function toggleChat() {
+            const chatWidget = document.getElementById('chat-widget');
+            if (chatWidget.classList.contains('hidden')) {
+                chatWidget.classList.remove('hidden');
+                setTimeout(() => {
+                    chatWidget.classList.remove('translate-y-4', 'opacity-0');
+                }, 10);
+            } else {
+                chatWidget.classList.add('translate-y-4', 'opacity-0');
+                setTimeout(() => {
+                    chatWidget.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        function toggleChatWithPrompt(promptText) {
+            const chatWidget = document.getElementById('chat-widget');
+            if (chatWidget.classList.contains('hidden')) {
+                toggleChat();
+            }
+            const chatInput = document.getElementById('chat-input');
+            chatInput.value = promptText;
+            chatInput.focus();
+        }
+
+        function handleChatKey(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const messagesContainer = document.getElementById('chat-messages');
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'flex items-start gap-2.5 justify-end';
+            userMsg.innerHTML = `
+                <div class="bg-accentGold text-black p-3 rounded-2xl rounded-tr-none max-w-[80%] leading-relaxed font-normal">
+                    ${text}
+                </div>
+                <div class="w-7 h-7 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-300 shrink-0 font-bold text-[10px]">You</div>
+            `;
+            messagesContainer.appendChild(userMsg);
+            input.value = '';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            const typingId = 'typing-' + Date.now();
+            const typingMsg = document.createElement('div');
+            typingMsg.id = typingId;
+            typingMsg.className = 'flex items-start gap-2.5';
+            typingMsg.innerHTML = `
+                <div class="w-7 h-7 rounded-full bg-accentGold/20 flex items-center justify-center text-accentGold shrink-0 font-bold text-[10px]">AI</div>
+                <div class="bg-zinc-900 border border-zinc-800 p-3 rounded-2xl rounded-tl-none text-zinc-400 max-w-[80%] flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 bg-accentGold rounded-full animate-bounce"></span>
+                    <span class="w-1.5 h-1.5 bg-accentGold rounded-full animate-bounce [animation-delay:0.2s]"></span>
+                    <span class="w-1.5 h-1.5 bg-accentGold rounded-full animate-bounce [animation-delay:0.4s]"></span>
+                </div>
+            `;
+            messagesContainer.appendChild(typingMsg);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            setTimeout(() => {
+                const typingElem = document.getElementById(typingId);
+                if(typingElem) typingElem.remove();
+                
+                let botResponse = "Excellent choice. For that experience, I recommend pairing it with a high-altitude biodynamic white wine or a citrus-infused molecular drink. Would you like to secure a table reservation for this week?";
+                
+                if(text.toLowerCase().includes('reservation') || text.toLowerCase().includes('book') || text.toLowerCase().includes('table')) {
+                    botResponse = "You can easily secure your table using our reservation form on the page, which connects directly to our WhatsApp booking line.";
+                } else if(text.toLowerCase().includes('pairing') || text.toLowerCase().includes('wine')) {
+                    botResponse = "Aetheria's pairings utilize extreme vintage selections curated by our AI Sommelier to amplify the umami profile of each masterpiece.";
+                }
+
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'flex items-start gap-2.5';
+                aiMsg.innerHTML = `
+                    <div class="w-7 h-7 rounded-full bg-accentGold/20 flex items-center justify-center text-accentGold shrink-0 font-bold text-[10px]">AI</div>
+                    <div class="bg-zinc-900 border border-zinc-800 p-3 rounded-2xl rounded-tl-none text-zinc-300 max-w-[80%] leading-relaxed">
+                        ${botResponse}
+                    </div>
+                `;
+                messagesContainer.appendChild(aiMsg);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1200);
+        }
+
+        // WhatsApp Reservation Automation Logic
+        function handleReservation(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('res-name').value;
+            const email = document.getElementById('res-email').value;
+            const date = document.getElementById('res-date').value;
+            const time = document.getElementById('res-time').value;
+            const guests = document.getElementById('res-guests').value;
+
+            const form = document.getElementById('reservation-form');
+            const successBox = document.getElementById('reservation-success');
+
+            form.style.opacity = '0.4';
+            form.style.pointerEvents = 'none';
+            successBox.classList.remove('hidden');
+            successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Constructing the automated WhatsApp message in English
+            const message = `Hello Aetheria! I would like to confirm a table reservation:%0A%0A` +
+                            `- *Name:* ${encodeURIComponent(name)}%0A` +
+                            `- *Email:* ${encodeURIComponent(email)}%0A` +
+                            `- *Date:* ${encodeURIComponent(date)}%0A` +
+                            `- *Time:* ${encodeURIComponent(time)}%0A` +
+                            `- *Guests:* ${encodeURIComponent(guests)} people%0A%0A` +
+                            `Please confirm my booking. Thank you!`;
+
+            // Trigger redirection to WhatsApp after a brief moment
+            setTimeout(() => {
+                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+                window.open(whatsappUrl, '_blank');
+            }, 1500);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderMenu('all');
+        });
+    </script>
+</body>
+</html>
